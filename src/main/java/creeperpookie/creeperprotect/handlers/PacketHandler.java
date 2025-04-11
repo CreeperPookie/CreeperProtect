@@ -72,7 +72,7 @@ public class PacketHandler extends ChannelDuplexHandler
 		if (msg instanceof CPacketUseEntity)
 		{
 			CPacketUseEntity packet = (CPacketUseEntity) msg;
-			int entityId = ObfuscationReflectionHelper.getPrivateValue(CPacketUseEntity.class, packet, "entityId");
+			int entityId = ObfuscationReflectionHelper.getPrivateValue(CPacketUseEntity.class, packet, 0);
 			for (World world : FMLCommonHandler.instance().getMinecraftServerInstance().worlds)
 			{
 				Entity entity = world.getEntityByID(entityId);
@@ -92,8 +92,8 @@ public class PacketHandler extends ChannelDuplexHandler
 		if (msg instanceof SPacketEntityStatus)
 		{
 			SPacketEntityStatus packet = (SPacketEntityStatus) msg;
-			int entityId = ObfuscationReflectionHelper.getPrivateValue(SPacketEntityStatus.class, packet, "entityId");
-			byte opCode = ObfuscationReflectionHelper.getPrivateValue(SPacketEntityStatus.class, packet, "logicOpcode");
+			int entityId = ObfuscationReflectionHelper.getPrivateValue(SPacketEntityStatus.class, packet, 0);
+			byte opCode = ObfuscationReflectionHelper.getPrivateValue(SPacketEntityStatus.class, packet, 1);
 			for (World world : FMLCommonHandler.instance().getMinecraftServerInstance().worlds)
 			{
 				Entity entity = world.getEntityByID(entityId);
@@ -103,7 +103,7 @@ public class PacketHandler extends ChannelDuplexHandler
 		else if (msg instanceof SPacketSoundEffect)
 		{
 			SPacketSoundEffect packet = (SPacketSoundEffect) msg;
-			SoundEvent sound = ObfuscationReflectionHelper.getPrivateValue(SPacketSoundEffect.class, packet, "sound");
+			SoundEvent sound = ObfuscationReflectionHelper.getPrivateValue(SPacketSoundEffect.class, packet, 0);
 			if (sound == SoundEvents.ENTITY_CREEPER_HURT || sound == SoundEvents.ENTITY_CREEPER_DEATH) return;
 		}
 		ctx.write(msg, promise);
