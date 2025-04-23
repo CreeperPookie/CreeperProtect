@@ -1,0 +1,17 @@
+name: ${name}
+version: ${version}
+author: ${author}
+description: ${description}
+website: ${website}
+main: creeperpookie.creeperprotect.CreeperProtectPlugin
+api-version: 1.19
+commands:
+  creeperprotect:
+    description: 'CreeperProtect plugin command'
+    usage: '/creeperprotect'
+    permission: creeperprotect.command
+    permission-message: 'You do not have permission to use this command!'
+permissions:
+  creeperprotect.command:
+    description: 'Allows the use of the /creeperprotect command'
+    default: op
