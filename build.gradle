@@ -82,7 +82,7 @@ jar
 
 shadowJar
 {
-    archiveFileName = "${project.name}-${project.version}.jar"
+    archiveFileName = "${project.name}-v${project.version}.jar"
 }
 
 def targetJavaVersion = 17
