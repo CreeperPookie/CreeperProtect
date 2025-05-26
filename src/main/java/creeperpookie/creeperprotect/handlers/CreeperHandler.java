@@ -2,17 +2,13 @@ package creeperpookie.creeperprotect.handlers;
 
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.destroystokyo.paper.event.server.ServerTickEndEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -70,6 +66,18 @@ public class CreeperHandler implements Listener
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event)
 	{
 		if (event.getEntity() instanceof Creeper) event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onEntityApplyEffect(EntityPotionEffectEvent event)
+	{
+		if (event.getEntity() instanceof Creeper && (event.getAction() == EntityPotionEffectEvent.Action.ADDED || event.getAction() == EntityPotionEffectEvent.Action.CHANGED) && (event.getNewEffect() != null && event.getNewEffect().getType() == PotionEffectType.HARM || event.getNewEffect().getType() == PotionEffectType.HEAL) && (event.getNewEffect().getType() == PotionEffectType.HARM ? 6 : 4) << event.getNewEffect().getAmplifier() < 0) event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onHeal(EntityRegainHealthEvent event)
+	{
+		if (event.getEntity() instanceof Creeper && event.getAmount() < 0) event.setCancelled(true);
 	}
 
 	@EventHandler
