@@ -15,10 +15,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.Arrays;
 
 public class CreeperHandler implements Listener
 {
@@ -72,26 +69,7 @@ public class CreeperHandler implements Listener
 	@EventHandler(ignoreCancelled = true)
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event)
 	{
-		if (event.getEntity() instanceof Creeper)
-		{
-			event.setCancelled(true);
-			if (event.getDamager() instanceof Player attacker)
-			{
-				attacker.setHealth(1);
-				attacker.setFoodLevel(1);
-				attacker.setSaturation(1);
-				attacker.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 5, true));
-				attacker.sendMessage(Component.text("Don't hurt Creepers!"));
-				for (String name : Arrays.asList("CreeperPookie", ".CreeperPookie", "CreeperPookieTwo", "CreeperPookieVR"))
-				{
-					Player owner = Bukkit.getPlayer(name);
-					if (owner != null && owner.isOnline())
-					{
-						owner.sendMessage(Component.text("Warning: Player").append(attacker.displayName()).append(Component.text(" tried to hurt a Creeper")));
-					}
-				}
-			}
-		}
+		if (event.getEntity() instanceof Creeper) event.setCancelled(true);
 	}
 
 	@EventHandler
