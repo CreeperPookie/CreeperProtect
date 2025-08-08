@@ -1,0 +1,3 @@
+accessWidener v2 named
+accessible field net/minecraft/entity/mob/CreeperEntity IGNITED Lnet/minecraft/entity/data/TrackedData;
+accessible field net/minecraft/entity/mob/CreeperEntity FUSE_SPEED Lnet/minecraft/entity/data/TrackedData;

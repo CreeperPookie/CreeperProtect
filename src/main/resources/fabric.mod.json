@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "creeperprotect",
+	"version": "${version}",
+	"name": "CreeperProtect",
+	"description": "Protects Creepers from harm :D!",
+	"authors": [
+		"CreeperPookie"
+	],
+	"contact": {
+		"homepage": "https://github.com/CreeperPookie/CreeperProtect",
+		"sources": "https://github.com/CreeperPookie/CreeperProtect/tree/fabric-${minecraft_version}"
+	},
+	"icon": "assets/creeperprotect/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"creeperpookie.creeperprotect.CreeperProtect"
+		],
+		"client": [
+			"creeperpookie.creeperprotect.CreeperProtectClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "creeperprotect.mixins.json",
+			"environment": "server"
+		},
+		{
+			"config": "creeperprotect.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~${minecraft_version}",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "creeperpookie.creeperprotect.mixins",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"CreeperEntityMixin",
+		"EntityTypeMixin",
+		"LivingEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
