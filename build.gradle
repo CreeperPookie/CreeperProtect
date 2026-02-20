@@ -17,7 +17,6 @@ plugins
 {
     id 'java'
     id "xyz.jpenilla.run-paper" version "2.3.1"
-    id "com.gradleup.shadow" version "8.3.0"
     id "io.papermc.paperweight.userdev" version "2.0.0-beta.16"
 }
 
@@ -36,8 +35,8 @@ repositories
 
 dependencies
 {
-    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
-    paperweight.paperDevBundle("1.19.2-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:${minecraft_version}-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("${minecraft_version}-R0.1-SNAPSHOT")
 }
 
 
@@ -45,6 +44,8 @@ paperweight
 {
     reobfArtifactConfiguration = ReobfArtifactConfiguration.getMOJANG_PRODUCTION()
 }
+
+def api_version = minecraft_version.split("\\.")[0..1].join(".")
 
 tasks
 {
@@ -58,31 +59,22 @@ tasks
             "-Xms2G",
             "-Xms4G",
             "-XX:+AllowEnhancedClassRedefinition",
-            "-XX:+UnlockExperimentalVMOptions",
+            "-XX:+UnlockExperimentalVMOptions", // Comment if not using JetBrains runtime!
             "-XX:+UseStringDeduplication"
         ]
         args = ["nogui"]
-        minecraftVersion("1.19.2")
+        minecraftVersion(server_version)
     }
-    build
-    {
-        dependsOn shadowJar
-    }
+}
+
+jar
+{
+	archiveFileName = "${project.name}-v${project.version}.jar"
 }
 
 compileJava
 {
     options.compilerArgs << '--add-modules' << 'java.logging'
-}
-
-jar
-{
-    enabled = false
-}
-
-shadowJar
-{
-    archiveFileName = "${project.name}-v${project.version}.jar"
 }
 
 def targetJavaVersion = 17
@@ -107,7 +99,7 @@ tasks.withType(JavaCompile).configureEach
 }
 
 processResources {
-    def props = [name: project.name, description: description, author: author, version: version, website: website]
+    def props = [name: project.name, description: description, author: author, version: version, website: website, api_version: api_version]
     inputs.properties props
     filteringCharset = 'UTF-8'
     filesMatching('plugin.yml') {

@@ -3,13 +3,14 @@ package creeperpookie.creeperprotect.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Random;
 
-public class DefaultTextColor implements TextColor
+public record DefaultTextColor(int value) implements TextColor
 {
-	private final int value;
-
 	public static final DefaultTextColor BLACK = new DefaultTextColor(0);
 	public static final DefaultTextColor DARK_BLUE = new DefaultTextColor(170);
 	public static final DefaultTextColor DARK_GREEN = new DefaultTextColor(43520);
@@ -27,16 +28,6 @@ public class DefaultTextColor implements TextColor
 	public static final DefaultTextColor YELLOW = new DefaultTextColor(16777045);
 	public static final DefaultTextColor WHITE = new DefaultTextColor(16777215);
 
-	private DefaultTextColor(int value)
-	{
-		this.value = value;
-	}
-
-	@Override
-	public int value()
-	{
-		return value;
-	}
 
 	public static TextColor getRandom(Random random)
 	{
@@ -71,9 +62,22 @@ public class DefaultTextColor implements TextColor
 	}
 
 	@Override
+	@NotNull
 	public String toString()
 	{
-		if (NamedTextColor.namedColor(value) != null) return "§" + getColorChar();
+		// Reflection used for backwards-compatibility with older API versions
+		Field field = Arrays.stream(NamedTextColor.class.getDeclaredFields()).filter(declaredField ->
+		{
+			try
+			{
+				return declaredField.getType() == int.class && declaredField.getInt(null) == value;
+			}
+			catch (IllegalAccessException e)
+			{
+				return false;
+			}
+		}).findFirst().orElse(null);
+		if (field != null) return "§" + getColorChar();
 		else
 		{
 			StringBuilder hex = new StringBuilder(Integer.toHexString(value).toLowerCase());

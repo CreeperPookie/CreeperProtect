@@ -4,7 +4,7 @@ author: ${author}
 description: ${description}
 website: ${website}
 main: creeperpookie.creeperprotect.CreeperProtectPlugin
-api-version: 1.19
+api-version: ${api_version}
 commands:
   creeperprotect:
     description: 'CreeperProtect plugin command'

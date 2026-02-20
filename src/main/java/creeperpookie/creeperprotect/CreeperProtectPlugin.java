@@ -16,8 +16,8 @@ public class CreeperProtectPlugin extends JavaPlugin
 	public void onEnable()
 	{
 		instance = this;
-		loadConfig();
 		Bukkit.getPluginManager().registerEvents(new CreeperHandler(), this);
+		loadConfig();
 		getCommand("creeperprotect").setExecutor(new CreeperProtectCommand());
 		Bukkit.getLogger().info("Enabled CreeperProtect");
 	}
@@ -33,7 +33,9 @@ public class CreeperProtectPlugin extends JavaPlugin
 	{
 		saveDefaultConfig();
 		reloadConfig();
+		CreeperHandler.setDamageAttackers(getConfig().getBoolean("damage-creeper-attackers", false));
 		CreeperHandler.setCreeperTargetingDisabled(getConfig().getBoolean("disable-creeper-targeting", true));
+		CreeperHandler.setClickableCreepersStatus(getConfig().getBoolean("clickable-creepers", true), Math.abs(getConfig().getInt("creeper-click-timeout", 6000)), Math.min(Math.abs(getConfig().getInt("click-gunpowder-drop", 64)), 1024), getConfig().getBoolean("shift-clickable-creepers", true));
 	}
 
 	public static CreeperProtectPlugin getInstance()

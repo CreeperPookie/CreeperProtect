@@ -1,2 +1,20 @@
+# Damage creeper attackers
+damage-creeper-attackers: true
+
 # Disable Creepers targeting (and following) players
-disable-creeper-targeting: false
+disable-creeper-targeting: true
+
+# Enable clicking creepers to spawn their drop without killing them
+clickable-creepers: true
+
+# Set click timeout (in ticks) to prevent spamming clicks
+# Default: 6000 ticks (5 minutes)
+# (use 0 for no timeout)
+creeper-click-timeout: 6000
+
+# Set drop amount for their normal drop (gunpowder)
+# Maximum: 1024
+click-gunpowder-drop: 64
+
+# Enable shift + right-clicking creepers to spawn a music disc without killing them
+shift-clickable-discs: true
